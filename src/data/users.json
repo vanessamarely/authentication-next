@@ -1,13 +1,13 @@
 [
   {
     "id": 1,
-    "firstName": "Terry",
-    "lastName": "Medhurst",
+    "firstName": "John",
+    "lastName": "Doe",
     "age": 50,
     "gender": "male",
-    "email": "atuny0@sohu.com",
+    "email": "john@gmail.com",
     "phone": "+63 791 675 8914",
-    "username": "atuny0",
+    "username": "john0",
     "password": "9uQFF1Lh",
     "birthDate": "2000-12-25",
     "image": "https://robohash.org/hicveldicta.png"
