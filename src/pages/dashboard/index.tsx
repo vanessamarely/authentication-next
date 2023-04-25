@@ -1,13 +1,15 @@
 import Profile from "@/components/profile";
 import Link from "next/link";
 import React, { useState } from "react";
+// Import useSession hook
 import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
   // useState hook to show profile
   const [showProfile, setShowProfile] = useState<boolean>(false);
-
+  // Get session
   const { data: session } = useSession();
+  // Get email from session
   const email = session?.user && session.user.email || "";
   // Function to handle show profile
   const handleShowProfile = async () => {

@@ -16,7 +16,7 @@ export default function Header({}: Props) {
       <div className="max-w-3xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {session && session.user ? (
           <button
-            className="rounded-lg bg-blue-400 p-2 mr-2"
+            className="rounded-lg bg-blue-400 p-2 mr-2 hover:bg-blue-700 text-white"
             onClick={() => signOut()}
             type="button"
           >
@@ -24,7 +24,7 @@ export default function Header({}: Props) {
           </button>
         ) : (
           <button
-            className="rounded-lg bg-blue-400 p-2 mr-2"
+            className="rounded-lg bg-blue-400 p-2 mr-2 hover:bg-blue-700 text-white"
             onClick={() => signIn()}
             type="button"
           >

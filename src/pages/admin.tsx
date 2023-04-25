@@ -1,9 +1,12 @@
-import { FC } from "react";
+import { useSession } from "next-auth/react";
 
-interface Props {}
+export default function Admin() {
+  const { data: session } = useSession();
 
-const Admin: FC<Props> = (props): JSX.Element => {
-  return <div>admin</div>;
-};
 
-export default Admin;
+  if (!session) {
+    return <div>Access Denied</div>;
+  }
+
+  return <div>Admin</div>;
+}

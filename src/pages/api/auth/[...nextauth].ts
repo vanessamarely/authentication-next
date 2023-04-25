@@ -3,6 +3,7 @@ import Auth0Provider from "next-auth/providers/auth0";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions: NextAuthOptions = {
+  // https://next-auth.js.org/configuration/providers
   providers: [
     Auth0Provider({
       clientId: process.env.AUTH0_CLIENT_ID as string,
@@ -21,7 +22,7 @@ export const authOptions: NextAuthOptions = {
       //  type: 'password', // The input type, e.g. 'password', 'email', 'text', etc.
       //  placeholder: 'Enter your password', // The HTML input placeholder
       credentials: {},
-      authorize(credentials, req) {
+      async authorize(credentials) {
         // Add logic here to look up the user from the credentials supplied
         const { email, password } = credentials as {
           email: string;

@@ -1,13 +1,10 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+
+import { getProviders, signIn, getSession } from "next-auth/react";
 import { GetServerSidePropsContext } from "next";
-import {
-  getProviders,
-  signIn,
-  getSession,
-  getCsrfToken,
-} from "next-auth/react";
+
+import styles from './dashboard.module.css';
 
 /**
  * @object Data
@@ -20,6 +17,7 @@ type Data = {
 };
 
 export default function Login() {
+  // useState hook to store providers
   const [providers, setProviders] = useState<any>(null);
   // useRef hook to store form
   const ref = useRef<HTMLFormElement>(null);
@@ -28,6 +26,7 @@ export default function Login() {
 
   useEffect(() => {
     (async () => {
+      // Get providers
       const res = await getProviders();
       setProviders(res);
     })();
@@ -52,6 +51,9 @@ export default function Login() {
         redirect: true, // Redirect to dashboard
         callbackUrl: "/dashboard", // Redirect to dashboard
       });
+      if(res) {
+        router.push("/dashboard");
+      }
     }
   };
 
@@ -83,15 +85,33 @@ export default function Login() {
             required
           />
         </div>
-        <button className="rounded-lg bg-blue-400 p-2 mr-2">Login</button>
+        <button className="rounded-lg bg-blue-400 p-2 mr-2 hover:bg-blue-700 text-white">
+          Login
+        </button>
       </form>
 
       <button
-        className="rounded-lg bg-blue-400 p-2 m-2 mt-4"
+        className={`${styles.customButton} rounded-lg bg-blue-400 p-2 mr-2 hover:bg-blue-700 text-white mt-4`}
         onClick={() => signIn(providers.auth0.id)}
       >
         auth0
       </button>
     </div>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { req } = context;
+  // Get session
+  const session = await getSession({ req });
+  // if session exists, redirect to dashboard
+  if (session) {
+    return {
+      redirect: { destination: "/dashboard" },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

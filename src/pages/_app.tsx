@@ -9,6 +9,7 @@ export default function App({
   pageProps,
 }: AppProps<{ session: Session }>) {
   return (
+    // Wrap pages in SessionProvider to get session
     <SessionProvider session={pageProps.session}>
       <Layout>
         <Component {...pageProps} />
