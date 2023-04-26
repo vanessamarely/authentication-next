@@ -1,5 +1,10 @@
 import { useRouter } from "next/router";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+
+import { getProviders, signIn, getSession } from "next-auth/react";
+import { GetServerSidePropsContext } from "next";
+
+import styles from './dashboard.module.css';
 
 /**
  * @object Data
@@ -12,12 +17,22 @@ type Data = {
 };
 
 export default function Login() {
+  // useState hook to store providers
+  const [providers, setProviders] = useState<any>(null);
   // useRef hook to store form
   const ref = useRef<HTMLFormElement>(null);
   // useRouter hook to redirect
   const router = useRouter();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    (async () => {
+      // Get providers
+      const res = await getProviders();
+      setProviders(res);
+    })();
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // Prevent default form submission
     event.preventDefault();
     // Get form data
@@ -29,22 +44,16 @@ export default function Login() {
       const formData = new FormData(form);
       // Convert form data to object
       const data = Object.fromEntries(formData.entries());
-
-      // Send data to API
-      fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // Store email in localStorage
-          localStorage.setItem("email", data.email);
-          // Redirect to dashboard
-          router.push("/dashboard");
-        });
+      // Sign in user
+      const res = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: true, // Redirect to dashboard
+        callbackUrl: "/dashboard", // Redirect to dashboard
+      });
+      if(res) {
+        router.push("/dashboard");
+      }
     }
   };
 
@@ -76,8 +85,33 @@ export default function Login() {
             required
           />
         </div>
-        <button className="rounded-lg bg-blue-400 p-2 mr-2">Login</button>
+        <button className="rounded-lg bg-blue-400 p-2 mr-2 hover:bg-blue-700 text-white">
+          Login
+        </button>
       </form>
+
+      <button
+        className={`${styles.customButton} rounded-lg bg-blue-400 p-2 mr-2 hover:bg-blue-700 text-white mt-4`}
+        onClick={() => signIn(providers.auth0.id)}
+      >
+        auth0
+      </button>
     </div>
   );
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const { req } = context;
+  // Get session
+  const session = await getSession({ req });
+  // if session exists, redirect to dashboard
+  if (session) {
+    return {
+      redirect: { destination: "/dashboard" },
+    };
+  }
+
+  return {
+    props: {},
+  };
 }

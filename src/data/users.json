@@ -1,29 +1,31 @@
 [
   {
     "id": 1,
-    "firstName": "Terry",
-    "lastName": "Medhurst",
+    "firstName": "John",
+    "lastName": "Doe",
     "age": 50,
     "gender": "male",
-    "email": "atuny0@sohu.com",
+    "email": "john@gmail.com",
     "phone": "+63 791 675 8914",
-    "username": "atuny0",
+    "username": "john0",
     "password": "9uQFF1Lh",
     "birthDate": "2000-12-25",
-    "image": "https://robohash.org/hicveldicta.png"
+    "image": "https://robohash.org/hicveldicta.png",
+    "role": "admin"
   },
   {
     "id": 2,
-    "firstName": "Sheldon",
-    "lastName": "Quigley",
+    "firstName": "Vane",
+    "lastName": "Test",
     "age": 28,
-    "gender": "male",
-    "email": "hbingley1@plala.or.jp",
+    "gender": "female",
+    "email": "vane@mail.com",
     "phone": "+7 813 117 7139",
-    "username": "hbingley1",
-    "password": "CQutx25i8r",
+    "username": "vane",
+    "password": "1234",
     "birthDate": "2003-08-02",
-    "image": "https://robohash.org/doloremquesintcorrupti.png"
+    "image": "https://robohash.org/doloremquesintcorrupti.png",
+    "role": "member"
   },
   {
     "id": 3,
@@ -36,6 +38,7 @@
     "username": "rshawe2",
     "password": "OWsTbMUgFc",
     "birthDate": "1992-12-30",
-    "image": "https://robohash.org/consequunturautconsequatur.png"
+    "image": "https://robohash.org/consequunturautconsequatur.png",
+    "role": "member"
   }
 ]
